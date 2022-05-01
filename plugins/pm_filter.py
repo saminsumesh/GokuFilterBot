@@ -60,10 +60,6 @@ async def next_page(bot, query):
         return
     settings = await get_settings(query.message.chat.id)
     if settings['button']:
-        btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
-        )
         btn = [
             [
                 InlineKeyboardButton(
@@ -93,6 +89,10 @@ async def next_page(bot, query):
     else:
         off_set = offset - 10
     if n_offset == 0:
+        btn.append(
+            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
+             InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
+        )
         btn.append(
             [InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
              InlineKeyboardButton(f"ᴘᴀɢᴡs {round(int(offset) / 10) + 1} / {round(total / 10)}",
@@ -461,12 +461,27 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "manuelfilter":
         buttons = [[
-            InlineKeyboardButton('« ʙᴀᴄᴋ', callback_data='help'),
+            InlineKeyboardButton('« ʙᴀᴄᴋ', callback_data='filter'),
             InlineKeyboardButton('ʙᴜᴛᴛᴏɴ', callback_data='button')
+        ],[
+            InlineKeyboardButton('« ʙᴀᴄᴋ', callback_data='help')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.MANUELFILTER_TXT,
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+    elif query.data == "filter":
+        buttons = [[
+            InlineKeyboardButton('ғɪʟᴛᴇʀ', callback_data='manuelfilter'),
+            InlineKeyboardButton('ᴀᴜᴛᴏғɪʟᴛᴇʀ', callback_data='autofilter')
+        ],[
+            InlineKeyboardButton('« ʙᴀᴄᴋ', callback_data='help')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(
+            text="**ᴄʜᴏᴏsᴇ ᴛʜᴇ ᴛʏᴘᴇ ᴏғ ғɪʟᴛᴇʀ ʏᴏᴜ ᴡᴀɴᴛ**",
             reply_markup=reply_markup,
             parse_mode='html'
         )
@@ -524,7 +539,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "stats":
         buttons = [[
             InlineKeyboardButton('« ʙᴀᴄᴋ', callback_data='help'),
-            InlineKeyboardButton('♻ʀᴇғʀᴇsɢ', callback_data='rfrsh')
+            InlineKeyboardButton('ʀᴇғʀᴇsʜ', callback_data='rfrsh')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         total = await Media.count_documents()
@@ -633,10 +648,6 @@ async def auto_filter(client, msg, spoll=False):
         search, files, offset, total_results = spoll
     pre = 'filep' if settings['file_secure'] else 'file'
     if settings["button"]:
-        btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
-        )
         btn = [
             [
                 InlineKeyboardButton(
@@ -664,6 +675,10 @@ async def auto_filter(client, msg, spoll=False):
         key = f"{message.chat.id}-{message.message_id}"
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
+        btn.append(
+            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
+             InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
+        )
         btn.append(
             [InlineKeyboardButton(text=f"1/{round(int(total_results) / 10)}", callback_data="pages"),
              InlineKeyboardButton(text="ɴᴇxᴛ »", callback_data=f"next_{req}_{key}_{offset}")]
