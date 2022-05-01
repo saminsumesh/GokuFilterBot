@@ -532,6 +532,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='md'
         )
+    elif query.data == "close":
+        await query.message.delete()
     elif query.data == "admin":
         buttons = [[
             InlineKeyboardButton('« Back', callback_data='extra')
