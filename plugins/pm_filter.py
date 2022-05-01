@@ -667,9 +667,9 @@ async def auto_filter(client, msg, spoll=False):
             for file in files
         ]
     else:
-        btn.append(
+        btn = (
             [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
+             InlineKeyboardButton(f"📂 Files: {int(offset)}", callback_data="total")]
         )
         btn = [
             [
