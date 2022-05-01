@@ -726,8 +726,8 @@ async def auto_filter(client, msg, spoll=False):
   
 
 async def advantage_spell_chok(msg):
-    query = msg.message.text
-    reply = query.replace(" ", "+")
+    query = msg.text
+    reply = query.replace(".", "")
     reply_markup = InlineKeyboardMarkup([[
      InlineKeyboardButton("🔮IMDB🔮", url=f"https://imdb.com/find?q={reply}"),
      InlineKeyboardButton("🪐 Reason", callback_data="reason")
