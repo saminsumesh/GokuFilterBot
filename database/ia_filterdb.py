@@ -64,6 +64,25 @@ async def save_file(media):
             logger.info(f'{getattr(media, "file_name", "NO_FILE")} is saved to database')
             return True, 1
 
+async def get_filter_results(query):
+    query = query.strip()
+    if not query:
+        raw_pattern = '.'
+    elif ' ' not in query:
+        raw_pattern = r'(\b|[\.\+\-_])' + query + r'(\b|[\.\+\-_])'
+    else:
+        raw_pattern = query.replace(' ', r'.*[\s\.\+\-_]')
+    try:
+        regex = re.compile(raw_pattern, flags=re.IGNORECASE)
+    except:
+        return []
+    filter = {'file_name': regex}
+    total_results = await Media.count_documents(filter)
+    cursor = Media.find(filter)
+    cursor.sort('$natural', -1)
+    files = await cursor.to_list(length=int(total_results))
+    return files
+
 
 
 async def get_search_results(query, file_type=None, max_results=10, offset=0, filter=False):
