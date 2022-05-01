@@ -35,112 +35,93 @@ async def give_filter(client, message):
     if k == False:
         await auto_filter(client, message)
 
-
-@Client.on_callback_query(filters.regex(r"^next"))
-async def next_page(bot, query):
-    ident, req, key, offset = query.data.split("_")
-    if int(req) not in [query.from_user.id, 0]:
-        return await query.answer("", show_alert=True)
+@Client.on_callback_query()
+async def cb_handler(client: Client, query):
+    clicked = query.from_user.id
     try:
-        offset = int(offset)
+        typed = query.message.reply_to_message.from_user.id
     except:
-        offset = 0
-    search = BUTTONS.get(key)
-    if not search:
-        await query.answer("You are using one of my old messages, please send the request again.", show_alert=True)
-        return
+        typed = query.from_user.id
 
-    files, n_offset, total = await get_search_results(search, offset=offset, filter=True)
-    try:
-        n_offset = int(n_offset)
-    except:
-        n_offset = 0
+    if (clicked == typed):
 
-    if not files:
-        return
-    settings = await get_settings(query.message.chat.id)
-    if settings['button']:
-        btn = [
-            [
-                InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
-                ),
-            ]
-            for file in files
-        ]
-    else:
-        btn = [
-            [
-                InlineKeyboardButton(
-                    text=f"{file.file_name}", callback_data=f'files#{file.file_id}'
-                ),
-                InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
-                    callback_data=f'files_#{file.file_id}',
-                ),
-            ]
-            for file in files
-        ]
+# # ---------- 🔘 [ | 𝗚𝗥𝗢𝗨𝗣 𝗙𝗜𝗟𝗧𝗘𝗥𝗦 | ] 🔘 ---------- # #
 
-    if 0 < offset <= 10:
-        off_set = 0
-    elif offset == 0:
-        off_set = None
-    else:
-        off_set = offset - 10
-    if n_offset == 0:
-        btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query.message.text}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
-        )
-        btn.append(
-            [InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
-             InlineKeyboardButton(f"ᴘᴀɢᴡs {round(int(offset) / 10) + 1} / {round(total / 10)}",
-                                  callback_data="pages")]
-        )
-    elif off_set is None:
-        btn.append(
-            [InlineKeyboardButton(f"{round(int(offset) / 10) + 1} / {round(ᴛᴏᴛᴀʟ / 10)}", callback_data="pages"),
-             InlineKeyboardButton("ɴᴇxᴛ »", callback_data=f"next_{req}_{key}_{n_offset}")])
-    else:
-        btn.append(
-            [
-                InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
-                InlineKeyboardButton(f"🗓 {round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
-                InlineKeyboardButton("ɴᴇxᴛ »", callback_data=f"next_{req}_{key}_{n_offset}")
-            ],
-        )
-    try:
-        await query.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(btn)
-        )
-    except MessageNotModified:
-        pass
-    await query.answer()
+        if query.data.startswith("nextgroup"):
+            ident, index, keyword = query.data.split("_")
+            try:
+                data = BUTTONS[keyword]
+            except KeyError:
+                await query.answer("This Is My Old Message So Please Request Again 🙏",show_alert=True)
+                return
+
+            if int(index) == int(data["total"]) - 2:
+                buttons = data['buttons'][int(index)+1].copy()
+
+                buttons.append(
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )                
+                await query.edit_message_reply_markup( 
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+                return
+            else:
+                buttons = data['buttons'][int(index)+1].copy()
+
+                buttons.append(
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)+1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)+1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)+2}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )                
+                await query.edit_message_reply_markup( 
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+                return
+
+        elif query.data.startswith("backgroup"):
+            ident, index, keyword = query.data.split("_")
+            try:
+                data = BUTTONS[keyword]
+            except KeyError:
+                await query.answer("This Is My Old Message So Please Request Again 🙏",show_alert=True)
+                return
+
+            if int(index) == 1:
+                buttons = data['buttons'][int(index)-1].copy()
+
+                buttons.append(
+                    [InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )
+                await query.edit_message_reply_markup( 
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+                return   
+            else:
+                buttons = data['buttons'][int(index)-1].copy()
+
+                buttons.append(
+                    [InlineKeyboardButton("🔙 Back Page", callback_data=f"backgroup_{int(index)-1}_{keyword}"),InlineKeyboardButton("Next Page ➡", callback_data=f"nextgroup_{int(index)-1}_{keyword}")]
+                )
+                buttons.append(
+                    [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
+                     InlineKeyboardButton("Close 🗑️", callback_data="close")]
+                )
 
 
-@Client.on_callback_query(filters.regex(r"^spolling"))
-async def advantage_spoll_choker(bot, query):
-    _, user, movie_ = query.data.split('#')
-    if int(user) != 0 and query.from_user.id != int(user):
-        return await query.answer("This message is not for you", show_alert=True)
-    if movie_ == "close_spellcheck":
-        return await query.message.delete()
-    movies = SPELL_CHECK.get(query.message.reply_to_message.message_id)
-    if not movies:
-        return await query.answer("You are clicking on an old button which is expired.", show_alert=True)
-    movie = movies[(int(movie_))]
-    await query.answer('Checking for Movie in database...')
-    k = await manual_filters(bot, query.message, text=movie)
-    if k == False:
-        files, offset, total_results = await get_search_results(movie, offset=0, filter=True)
-        if files:
-            k = (movie, files, offset, total_results)
-            await auto_filter(bot, query, k)
-        else:
-            k = await query.message.edit('This Movie Not Found In DataBase')
-            await asyncio.sleep(10)
-            await k.delete()
+                await query.edit_message_reply_markup( 
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+                return
 
 
 @Client.on_callback_query()
