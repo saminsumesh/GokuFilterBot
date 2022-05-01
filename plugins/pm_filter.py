@@ -421,7 +421,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "help":
         buttons = [[
@@ -438,7 +438,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.HELP_TXT.format(query.from_user.mention),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "about":
         buttons = [[
@@ -449,7 +449,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.ABOUT_TXT.format(temp.B_NAME),
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "source":
         buttons = [[
@@ -459,7 +459,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.SOURCE_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "manuelfilter":
         buttons = [[
@@ -470,7 +470,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.MANUELFILTER_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "filter":
         buttons = [[
@@ -493,7 +493,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.BUTTON_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "autofilter":
         buttons = [[
@@ -503,7 +503,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.AUTOFILTER_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "coct":
         buttons = [[
@@ -513,7 +513,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.CONNECTION_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "info":
         buttons = [[
@@ -523,7 +523,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.INFO_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "imdb":
         buttons = [[
@@ -533,7 +533,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.IMDB_TXT,
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "admin":
         buttons = [[
