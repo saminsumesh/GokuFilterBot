@@ -47,7 +47,7 @@ async def cb_handler(client: Client, query):
 
 # # ---------- 🔘 [ | 𝗚𝗥𝗢𝗨𝗣 𝗙𝗜𝗟𝗧𝗘𝗥𝗦 | ] 🔘 ---------- # #
 
-        if query.data.startswith("nextgroup"):
+       if query.data.startswith("nextgroup"):
             ident, index, keyword = query.data.split("_")
             try:
                 data = BUTTONS[keyword]
@@ -102,6 +102,9 @@ async def cb_handler(client: Client, query):
                     [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
                      InlineKeyboardButton("Close 🗑️", callback_data="close")]
                 )
+                buttons.append(
+                    [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
+                )
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
@@ -116,39 +119,16 @@ async def cb_handler(client: Client, query):
                     [InlineKeyboardButton(f"📃 Pages {int(index)}/{data['total']}", callback_data="pages"),
                      InlineKeyboardButton("Close 🗑️", callback_data="close")]
                 )
-
+                buttons.append(
+                    [InlineKeyboardButton(text="Check PM", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
+                )
 
                 await query.edit_message_reply_markup( 
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
-
-
-@Client.on_callback_query()
-async def cb_handler(client: Client, query: CallbackQuery):
-    if query.data == "close_data":
-        await query.message.delete()
-    elif query.data == "delallconfirm":
-        userid = query.from_user.id
-        chat_type = query.message.chat.type
-
-        if chat_type == "private":
-            grpid = await active_connection(str(userid))
-            if grpid is not None:
-                grp_id = grpid
-                try:
-                    chat = await client.get_chat(grpid)
-                    title = chat.title
-                except:
-                    await query.message.edit_text("Make sure I'm present in your group!!", quote=True)
-                    return
-            else:
-                await query.message.edit_text(
-                    "I'm not connected to any groups!\nCheck /connections or connect to any groups",
-                    quote=True
-                )
-                return 
-
+        
+            
         elif chat_type in ["group", "supergroup"]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
@@ -161,10 +141,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await del_all(query.message, grp_id, title)
         else:
             await query.answer("You need to be Group Owner or an Auth User to do that!", show_alert=True)
-    elif query.data == "delallcancel":
-        userid = query.from_user.id
-        chat_type = query.message.chat.type
-
+ 
         if chat_type == "private":
             await query.message.reply_to_message.delete()
             await query.message.delete()
