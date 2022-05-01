@@ -702,11 +702,11 @@ async def auto_filter(client, message):
 
         imdb=await get_poster(search)
         if imdb and imdb.get('poster'):
-            await message.reply_photo(photo=imdb.get('poster'), caption=LuciferMoringstar.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
+            await message.reply_photo(photo=imdb.get('poster'), caption=script.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
         elif imdb:
             await message.reply_photo(photo=random.choice(BOT_PICS), caption=script.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
         else:
-            await message.reply_sticker(photo=random.choice(BOT_PICS), caption=script.IMDB_MOVIE_2.format(query=search, mention=message.from_user.mention, chat=message.chat.title), reply_markup=InlineKeyboardMarkup(buttons))
+            await message.reply_sticker("CAACAgUAAxkBAAIBPWJukSYrqGzTevtJeiXt0VurpiW0AALjBQACpKMQVP3FLTCQDGE0JAQ", reply_markup=InlineKeyboardMarkup(buttons))
 
 
 
