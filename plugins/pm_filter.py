@@ -721,7 +721,9 @@ async def auto_filter(client, msg, spoll=False):
             await message.reply_sticker("CAACAgUAAxkBAAIBPWJukSYrqGzTevtJeiXt0VurpiW0AALjBQACpKMQVP3FLTCQDGE0JAQ", reply_markup=InlineKeyboardMarkup(btn))
     else:
         await message.reply_sticker("CAACAgUAAxkBAAIBPWJukSYrqGzTevtJeiXt0VurpiW0AALjBQACpKMQVP3FLTCQDGE0JAQ", reply_markup=InlineKeyboardMarkup(btn))
-   
+    if spoll:
+        await msg.message.delete()
+  
 
 async def advantage_spell_chok(msg):
     query = msg.message.text
