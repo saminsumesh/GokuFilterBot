@@ -180,9 +180,18 @@ async def save_group_settings(group_id, key, value):
     current[key] = value
     temp.SETTINGS[group_id] = current
     await db.update_settings(group_id, current)
-    
 
-
+def get_file_id(msg: Message):
+    if msg.media:
+        for message_type in (
+            "photo",
+            "animation",
+            "audio",
+            "document",
+            "video",
+            "video_note",
+            "voice",
+            "sticker"
         ):
             obj = getattr(msg, message_type)
             if obj:
