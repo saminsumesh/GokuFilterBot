@@ -3,41 +3,38 @@ class script(object):
     HELP_TXT = """Help {}"""
     ABOUT_TXT = """About"""
 
-    MANUELFILTER_TXT = """Help: <b>Filters</b>
-
+    MANUELFILTER_TXT = """**Filters**
 - Filter is the feature were users can set automated replies for a particular keyword and EvaMaria will respond whenever a keyword is found the message
 
-<b>NOTE:</b>
-1. eva maria should have admin privillage.
+**NOTE:**
+1. Bot should have admin privilege on the chat
 2. only admins can add filters in a chat.
 3. alert buttons have a limit of 64 characters.
 
-<b>Commands and Usage:</b>
-• /filter - <code>add a filter in chat</code>
-• /filters - <code>list all the filters of a chat</code>
-• /del - <code>delete a specific filter in chat</code>
-• /delall - <code>delete the whole filters in a chat (chat owner only)</code>"""
-    BUTTON_TXT = """Help: <b>Buttons</b>
+**Commands and Usage:**
+• /filter - add a filter in chat
+• /filters - list all the filters of a chat
+• /del - delete a specific filter in chat
+• /delall - delete the whole filters in a chat (chat owner only)"""
 
-- Eva Maria Supports both url and alert inline buttons.
+    BUTTON_TXT = """**Buttons**
+- @Zac_AutoFilterBot Support both url and alert inline buttons.
 
-<b>NOTE:</b>
-1. Telegram will not allows you to send buttons without any content, so content is mandatory.
-2. Eva Maria supports buttons with any telegram media type.
-3. Buttons should be properly parsed as markdown format
+**URL buttons:**
+`[Button Text](buttonurl:https://t.me/EvaMariaBot)`
+Alert buttons:
+`[Button Text](buttonalert:This is an alert message)`"""
 
-<b>URL buttons:</b>
-<code>[Button Text](buttonurl:https://t.me/EvaMariaBot)</code>
+    AUTOFILTER_TXT = """**Autofilter**
+Autofilter is the feature in which the bot provides the files stored in its database to the users based on their queries in the form of auto generated button filters.
+Currently the Autofilter provides movie & series files to users in respect of their queries.
 
-<b>Alert buttons:</b>
-<code>[Button Text](buttonalert:This is an alert message)</code>"""
-    AUTOFILTER_TXT = """Help: <b>Auto Filter</b>
+**COMMANDS & USAGE:**
+• /settings: To adjust the Autofilter settings specific to your group.
 
-<b>NOTE:</b>
-1. Make me the admin of your channel if it's private.
-2. make sure that your channel does not contains camrips, porn and fake files.
-3. Forward the last message to me with quotes.
- I'll add all the files in that channel to my db."""
+**NOTE:**
+- To adjust the Autofilter settings make sure that you have connected your group to my PM. If not then you can do so by using the command /connect .
+- If you don't know the group id you can access it by giving the command /id in your group."""
 
     CONNECTION_TXT = """**Connections**
 - Used to connect bot to PM for managing filters 
