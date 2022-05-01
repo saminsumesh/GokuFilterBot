@@ -2,6 +2,12 @@ class script(object):
     START_TXT = """Hey {}"""
     HELP_TXT = """Help {}"""
     ABOUT_TXT = """About"""
+    IMDB_MOVIE_2 = """
+🎬 **Title** : [{title}]({url})
+🎭 **Genre** : {genres}
+📆 **Release** : {year}
+📕 **Short Info** : {short}
+"""
     IMDB_MOVIE_1 = """
 🎬 **Title** : [{title}]({url})
 🎭 **Genre** : {genres}
