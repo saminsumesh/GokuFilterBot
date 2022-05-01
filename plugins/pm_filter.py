@@ -640,7 +640,7 @@ async def auto_filter(client, message):
     if 2 < len(message.text) < 50:    
         btn = []
         search = message.text
-        files = await get_filter_results(query=search)
+        files = await get_search_results(query=search)
         if files:
             btn.append([InlineKeyboardButton(text=f"🔮 {search}", callback_data=f"{search}")]
             )
