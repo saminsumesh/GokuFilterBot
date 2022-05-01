@@ -428,7 +428,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('Info', callback_data='info')
         ], [
             InlineKeyboardButton('Connection', callback_data='coct'),
-            InlineKeyboardButton('IMDb', callback_data='imdb')
+            InlineKeyboardButton('IMDb', callback_data='omdb')
         ], [
             InlineKeyboardButton('« Back', callback_data='start'),
             InlineKeyboardButton('Status', callback_data='stats')
@@ -522,7 +522,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='md'
         )
-    elif query.data == "imdb":
+    elif query.data == "omdb":
         buttons = [[
             InlineKeyboardButton('« Back', callback_data='help')
         ]]
