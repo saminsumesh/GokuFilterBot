@@ -91,7 +91,7 @@ async def next_page(bot, query):
     if n_offset == 0:
         btn.append(
             [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query.message.text}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data=total)]
+             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
         )
         btn.append(
             [InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
@@ -683,7 +683,7 @@ async def auto_filter(client, msg, spoll=False):
         req = message.from_user.id if message.from_user else 0
         btn.append(
             [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data=total)]
+             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
         )
         btn.append(
             [InlineKeyboardButton(text=f"1/{round(int(total_results) / 10)}", callback_data="pages"),
