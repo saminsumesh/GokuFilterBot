@@ -181,32 +181,8 @@ async def save_group_settings(group_id, key, value):
     temp.SETTINGS[group_id] = current
     await db.update_settings(group_id, current)
     
-def get_size(size):
-    """Get size in readable format"""
 
-    units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB"]
-    size = float(size)
-    i = 0
-    while size >= 1024.0 and i < len(units):
-        i += 1
-        size /= 1024.0
-    return "%.2f %s" % (size, units[i])
 
-def split_list(l, n):
-    for i in range(0, len(l), n):
-        yield l[i:i + n]  
-
-def get_file_id(msg: Message):
-    if msg.media:
-        for message_type in (
-            "photo",
-            "animation",
-            "audio",
-            "document",
-            "video",
-            "video_note",
-            "voice",
-            "sticker"
         ):
             obj = getattr(msg, message_type)
             if obj:
@@ -364,6 +340,22 @@ def remove_escapes(text: str) -> str:
             res += text[counter]
     return res
 
+def get_size(size):
+    """Get size in readable format"""
+
+    units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB"]
+    size = float(size)
+    i = 0
+    while size >= 1024.0 and i < len(units):
+        i += 1
+        size /= 1024.0
+    return "%.2f %s" % (size, units[i])
+
+# ~~~~ AutoFilter Buttons ~~~~ #
+
+def split_list(l, n):
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
 
 def humanbytes(size):
     if not size:
