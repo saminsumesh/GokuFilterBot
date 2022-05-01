@@ -654,9 +654,6 @@ async def auto_filter(client, msg, spoll=False):
         search, files, offset, total_results = spoll
     pre = 'filep' if settings['file_secure'] else 'file'
     if settings["button"]:
-        btn = (
-  )
-
         btn = [
             [
                 InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
