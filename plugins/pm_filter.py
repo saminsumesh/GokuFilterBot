@@ -649,6 +649,10 @@ async def auto_filter(client, msg, spoll=False):
         else:
             return
     else:
+        btn.append(
+            [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
+             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
+        )
         settings = await get_settings(msg.message.chat.id)
         message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
@@ -663,6 +667,10 @@ async def auto_filter(client, msg, spoll=False):
             for file in files
         ]
     else:
+        btn.append(
+            [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
+             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
+        )
         btn = [
             [
                 InlineKeyboardButton(
@@ -675,16 +683,11 @@ async def auto_filter(client, msg, spoll=False):
                 ),
             ]
             for file in files
-        ]
-
+        ].
     if offset != "":
         key = f"{message.chat.id}-{message.message_id}"
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
-        btn.append(
-            [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
-             InlineKeyboardButton(f"{int(offset)}", callback_data="total")]
-        )
         btn.append(
             [InlineKeyboardButton(text=f"1/{round(int(total_results) / 10)}", callback_data="pages"),
              InlineKeyboardButton(text="ɴᴇxᴛ »", callback_data=f"next_{req}_{key}_{offset}")]
@@ -712,7 +715,7 @@ async def auto_filter(client, msg, spoll=False):
             certificates=imdb["certificates"],
             languages=imdb["languages"],
             director=imdb["director"],
-            writer=imdb["writer"],
+            short_info=imdb["short_short_info"],
             producer=imdb["producer"],
             composer=imdb["composer"],
             cinematographer=imdb["cinematographer"],
