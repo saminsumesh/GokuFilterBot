@@ -648,8 +648,8 @@ async def auto_filter(client, message):
                 file_id = file.file_id
                 file_name = file.file_name
                 file_size = get_size(file.file_size)
-                btn.append([InlineKeyboardButton(text=f'🍭 {file_name}', callback_data=f"lucifermoringstar_robot#{file_id}"),
-                            InlineKeyboardButton(text=f'🍬 {file_size}', callback_data=f"lucifermoringstar_robot#{file_id}")]
+                btn.append([InlineKeyboardButton(text=f'🍭 {file_name}', callback_data=f"files#{file_id}"),
+                            InlineKeyboardButton(text=f'🍬 {file_size}', callback_data=f"files#{file_id}")]
                 )
         else:
             if SPELL_CHECK_REPLY:  
@@ -699,17 +699,14 @@ async def auto_filter(client, message):
             [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages"),
              InlineKeyboardButton("Close 🗑️", callback_data="close")]
         )
-        buttons.append(
-            [InlineKeyboardButton(text="🤖 CHECK MY PM 🤖", url=f"https://telegram.dog/{bot_info.BOT_USERNAME}")]
-        )
 
         imdb=await get_poster(search)
         if imdb and imdb.get('poster'):
-            await message.reply_photo(photo=imdb.get('poster'), caption=LuciferMoringstar.GET_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
+            await message.reply_photo(photo=imdb.get('poster'), caption=LuciferMoringstar.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
         elif imdb:
-            await message.reply_photo(photo=random.choice(BOT_PICS), caption=LuciferMoringstar.GET_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
+            await message.reply_photo(photo=random.choice(BOT_PICS), caption=script.IMDB_MOVIE_1.format(mention=message.from_user.mention, query=search, title=imdb.get('title'), genres=imdb.get('genres'), year=imdb.get('year'), rating=imdb.get('rating'), url=imdb['url']), reply_markup=InlineKeyboardMarkup(buttons))
         else:
-            await message.reply_photo(photo=random.choice(BOT_PICS), caption=LuciferMoringstar.GET_MOVIE_2.format(query=search, mention=message.from_user.mention, chat=message.chat.title), reply_markup=InlineKeyboardMarkup(buttons))
+            await message.reply_sticker(photo=random.choice(BOT_PICS), caption=script.IMDB_MOVIE_2.format(query=search, mention=message.from_user.mention, chat=message.chat.title), reply_markup=InlineKeyboardMarkup(buttons))
 
 
 
