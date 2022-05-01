@@ -653,11 +653,11 @@ async def auto_filter(client, msg, spoll=False):
         message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
     pre = 'filep' if settings['file_secure'] else 'file'
-    if settings["button"]:
         btn = (
             [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
              InlineKeyboardButton(f"📂 Files: {int(offset)}", callback_data="total")]
         )
+    if settings["button"]:
         btn = [
             [
                 InlineKeyboardButton(
@@ -667,10 +667,6 @@ async def auto_filter(client, msg, spoll=False):
             for file in files
         ]
     else:
-        btn = (
-            [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
-             InlineKeyboardButton(f"📂 Files: {int(offset)}", callback_data="total")]
-        )
         btn = [
             [
                 InlineKeyboardButton(
