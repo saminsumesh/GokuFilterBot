@@ -90,7 +90,7 @@ async def next_page(bot, query):
         off_set = offset - 10
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
+            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query.message.text}"),
              InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
         )
         btn.append(
@@ -412,8 +412,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('Updates', url='https://t.me/zacbots'),
             InlineKeyboardButton('Support', url='https://t.me/zacsupport')
         ], [
-            InlineKeyboardButton('Command', callback_data='help'),
-            InlineKeyboardButton('Info', callback_data='about')
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('About', callback_data='about')
+        ], [
+            InlineKeyboardButton("Close", callback_data='close')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -424,10 +426,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "help":
         buttons = [[
             InlineKeyboardButton('Filters', callback_data='filter'),
-            InlineKeyboardButton('', callback_data='')
+            InlineKeyboardButton('Info', callback_data='info')
         ], [
             InlineKeyboardButton('Connection', callback_data='coct'),
-            InlineKeyboardButton('Extra', callback_data='extra')
+            InlineKeyboardButton('IMDb', callback_data='imdb')
         ], [
             InlineKeyboardButton('« Back', callback_data='start'),
             InlineKeyboardButton('Status', callback_data='stats')
@@ -481,7 +483,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text="**Choose your Desired Filter**",
             reply_markup=reply_markup,
-            parse_mode='html'
+            parse_mode='md'
         )
     elif query.data == "button":
         buttons = [[
@@ -513,14 +515,23 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='html'
         )
-    elif query.data == "extra":
+    elif query.data == "info":
         buttons = [[
             InlineKeyboardButton('« Back', callback_data='help'),
-            InlineKeyboardButton('Admin', callback_data='admin')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
-            text=script.EXTRAMOD_TXT,
+            text=script.INFO_TXT,
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+    elif query.data == "imdb":
+        buttons = [[
+            InlineKeyboardButton('« Back', callback_data='help')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(
+            text=script.IMDB_TXT,
             reply_markup=reply_markup,
             parse_mode='html'
         )
@@ -674,7 +685,7 @@ async def auto_filter(client, msg, spoll=False):
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query}"),
+            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query.message.text}"),
              InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
         )
         btn.append(
