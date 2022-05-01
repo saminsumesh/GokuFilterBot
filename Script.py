@@ -85,3 +85,18 @@ Added By - {}
 ID - <code>{}</code>
 Name - {}
 """
+    INFO_TXT = """**Info**
+- You can get a Telegram **ID** of any users or a specified user on a group or Bots PM.
+
+**Command & Usage:**
+• /info - To Search a Movie Info
+• /id - To Search Something about Something
+
+"""
+    IMDB_TXT = """**IMDb**
+- This is an awsom feature to **Search** About a movie Detail without leaving Telegram
+
+**Command & Usage:**
+• /IMDb - To Search a Movie Info
+• /Search - To Search Something about Something
+"""
