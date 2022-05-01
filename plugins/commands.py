@@ -47,8 +47,10 @@ async def start(client, message):
             InlineKeyboardButton('Updates', url='https://t.me/ZacBots'),
             InlineKeyboardButton('Support', url='https://t.me/zacsupport')
             ],[
-            InlineKeyboardButton('Command', callback_data='help'),
-            InlineKeyboardButton('Info', callback_data='about')
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('About', callback_data='about')
+            ],[
+            InlineKeyboardButton('Close', callback_data='close'),
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -93,8 +95,10 @@ async def start(client, message):
             InlineKeyboardButton('Updates', url='https://t.me/ZacBots'),
             InlineKeyboardButton('Support', url='https://t.me/zacsupport')
             ],[
-            InlineKeyboardButton('Command', callback_data='help'),
-            InlineKeyboardButton('Info', callback_data='about')
+            InlineKeyboardButton('Help', callback_data='help'),
+            InlineKeyboardButton('About', callback_data='about')
+            ],[
+            InlineKeyboardButton('Close', callback_data='close'),
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
