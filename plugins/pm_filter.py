@@ -685,7 +685,7 @@ async def auto_filter(client, msg, spoll=False):
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(f"🔮 {query.message.text}", callback_data=f"{query.message.text}"),
+            [InlineKeyboardButton(f"🔮 {message.text}", callback_data=f"{message.text}"),
              InlineKeyboardButton(f"{int(offset)}", callback_data=f"{total}")]
         )
         btn.append(
