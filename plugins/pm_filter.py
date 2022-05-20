@@ -84,7 +84,7 @@ async def cb_handler(client: Client, query):
                 )
                 return
 
-        elif query.data.startswith("backgroup"):
+       elif query.data.startswith("backgroup"):
             ident, index, keyword = query.data.split("_")
             try:
                 data = BUTTONS[keyword]
