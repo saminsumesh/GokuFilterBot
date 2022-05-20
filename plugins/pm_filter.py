@@ -47,7 +47,7 @@ async def cb_handler(client: Client, query):
 
 # # ---------- 🔘 [ | 𝗚𝗥𝗢𝗨𝗣 𝗙𝗜𝗟𝗧𝗘𝗥𝗦 | ] 🔘 ---------- # #
 
-       if query.data.startswith("nextgroup"):
+        if query.data.startswith("nextgroup"):
             ident, index, keyword = query.data.split("_")
             try:
                 data = BUTTONS[keyword]
@@ -84,7 +84,7 @@ async def cb_handler(client: Client, query):
                 )
                 return
 
-       elif query.data.startswith("backgroup"):
+        elif query.data.startswith("backgroup"):
             ident, index, keyword = query.data.split("_")
             try:
                 data = BUTTONS[keyword]
